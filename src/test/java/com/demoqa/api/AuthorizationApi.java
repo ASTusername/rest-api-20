@@ -3,19 +3,26 @@ package com.demoqa.api;
 import com.demoqa.models.CredentialsModel;
 import com.demoqa.models.LoginResponseModel;
 
+import static com.demoqa.data.UserData.PASSWORD;
+import static com.demoqa.data.UserData.USERNAME;
+import static com.demoqa.data.BaseURIs.loginURI;
+import static com.demoqa.spec.Specifications.*;
 import static io.restassured.RestAssured.given;
-import static io.restassured.http.ContentType.JSON;
 
 public class AuthorizationApi {
 
-    public LoginResponseModel login(CredentialsModel credentials){
-        return given()
-                .body(credentials)
-                .contentType(JSON)
-                .when()
-                .post("/Account/v1/Login")
-                .then()
-                .statusCode(200)
-                .extract().as(LoginResponseModel.class);
+    public static LoginResponseModel login(){
+        CredentialsModel credentialsModel = new CredentialsModel();
+        credentialsModel.setUserName(USERNAME);
+        credentialsModel.setPassword(PASSWORD);
+
+        return
+                given(mainRequest)
+                        .body(credentialsModel)
+                        .when()
+                        .post(loginURI)
+                        .then()
+                        .spec(response200)
+                        .extract().as(LoginResponseModel.class);
     }
 }

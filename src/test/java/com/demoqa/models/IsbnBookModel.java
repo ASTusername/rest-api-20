@@ -5,8 +5,9 @@ import lombok.Data;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class LoginResponseModel {
-    String userId;
-    String token;
-    String expires;
+public class IsbnBookModel {
+    public IsbnBookModel(String isbn) {
+        this.isbn = isbn;
+    }
+    private String isbn;
 }

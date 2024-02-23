@@ -1,4 +1,4 @@
-package in.reqres.helpers;
+package com.demoqa.helpers;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 

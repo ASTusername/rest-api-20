@@ -1,31 +1,50 @@
 package com.demoqa.api;
 
-import com.demoqa.models.CredentialsModel;
-import com.demoqa.models.LoginResponseModel;
+import com.demoqa.models.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.demoqa.data.BaseURIs.collectionURI;
+import static com.demoqa.spec.Specifications.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 
 public class BooksApi {
-    public void deleteAllBooks(LoginResponseModel loginResponse) {
-        given()
-                .contentType(JSON)
+    public static void deleteAllBooks(LoginResponseModel loginResponse) {
+        given(mainRequest)
                 .header("Authorization", "Bearer " + loginResponse.getToken())
                 .queryParam("UserId", loginResponse.getUserId())
                 .when()
-                .delete("/BookStore/v1/Books")
+                .delete(collectionURI)
                 .then()
-                .statusCode(204);
+                .spec(response204);
     }
 
-    public void addBook(LoginResponseModel loginResponse, AddBooksListModel booksList ) {
-        given()
-                .contentType(JSON)
-                .header("Authorization", "Bearer " + loginResponse.getToken())
-                .body(booksList)
-                .when()
-                .post("/BookStore/v1/Books")
-                .then()
-                .statusCode(201);
+    public static BookCollectionResponse requestBookCollection() {
+        return given(mainRequest)
+                    .when()
+                    .get("/BookStore/v1/Books")
+                    .then()
+                    .spec(response200)
+                    .extract().as(BookCollectionResponse.class);
+    }
+
+    public static AddBookResponse addBook(String isb, String token, String userId) {
+
+        List<IsbnBookModel> books = new ArrayList<>();
+        books.add(new IsbnBookModel(isb));
+
+        AddBookBodyModel bookData = new AddBookBodyModel();
+        bookData.setUserId(userId);
+        bookData.setCollectionOfIsbns(books);
+        return given(mainRequest)
+                        .header("Authorization", "Bearer " + token)
+                        .body(bookData)
+                        .when()
+                        .post(collectionURI)
+                        .then()
+                        .spec(response201)
+                        .extract().as(AddBookResponse.class);
     }
 }

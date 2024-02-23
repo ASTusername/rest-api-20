@@ -3,10 +3,11 @@ package com.demoqa.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class LoginResponseModel {
+public class AddBookBodyModel {
     String userId;
-    String token;
-    String expires;
+    List<IsbnBookModel> collectionOfIsbns;
 }
