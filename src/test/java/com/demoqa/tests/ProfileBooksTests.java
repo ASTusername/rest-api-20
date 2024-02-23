@@ -17,7 +17,7 @@ public class ProfileBooksTests extends TestBase {
     ProfilePage profilePage = new ProfilePage();
 
     @Test
-    @Tag("books_Test")
+    @Tag("books_test")
     @WithLogin
     void successDeleteBookFromProfileTest() {
 

@@ -44,3 +44,9 @@ tasks.withType(Test) {
         }
     }
 }
+
+task demoqa_api(type: Test) {
+    useJUnitPlatform {
+        includeTags("books_test")
+    }
+}
