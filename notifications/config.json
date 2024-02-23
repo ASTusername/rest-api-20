@@ -1,0 +1,17 @@
+{
+  "base": {
+    "project": "${JOB_NAME}",
+    "environment": "qa.guru",
+    "comment": "Jenkins tests",
+    "reportLink": "${BUILD_URL}",
+    "language": "en",
+    "messenger": "telegram",
+    "allureFolder": "allure-report",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "6964674836:AAGoPFvsEOvtgHUI1DFsdTmXTvoVuOdlFB8",
+    "chat": "-1002067918595",
+    "replyTo": ""
+  }
+}
